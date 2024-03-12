@@ -61,22 +61,27 @@
     <textarea name="txtarea2" rows="4" placeholder="Extracted Email Addresses" readonly></textarea>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const textarea1 = document.querySelector('textarea[name="txtarea"]');
-      const button = document.getElementById('extractBtn');
-      const textarea2 = document.querySelector('textarea[name="txtarea2"]');
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const textarea1 = document.querySelector('textarea[name="txtarea"]');
+    const button = document.getElementById('extractBtn');
+    const textarea2 = document.querySelector('textarea[name="txtarea2"]');
 
-      button.addEventListener('click', extractEmails);
+    button.addEventListener('click', extractEmails);
 
-      function extractEmails() {
-        const content = textarea1.value;
-        const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
-        const matches = content.match(emailRegex);
-        const uniqueEmails = [...new Set(matches)];
-        textarea2.value = uniqueEmails.join('\n');
+    function extractEmails() {
+      const content = textarea1.value.trim(); // Trim to remove leading and trailing whitespaces
+      if (content === '') {
+        alert('Please enter text before extracting emails.');
+        return;
       }
-    });
-  </script>
+
+      const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+      const matches = content.match(emailRegex);
+      const uniqueEmails = matches ? [...new Set(matches)] : [];
+      textarea2.value = uniqueEmails.join('\n');
+    }
+  });
+</script>
 </body>
 </html>
