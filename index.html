@@ -9,61 +9,71 @@
       font-family: 'Arial', sans-serif;
       text-align: center;
       margin: 20px;
+      background-color: #f4f4f4;
+    }
+
+    #container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #3498db;
     }
 
     textarea {
-      width: 80%;
+      width: 100%;
       margin-bottom: 10px;
-      border-radius: 0%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
 
     button {
-      padding: 10px;
+      padding: 10px 20px;
       background-color: #3498db;
       color: #fff;
       border: none;
       cursor: pointer;
-      border-radius: 7%;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
       background-color: #2980b9;
     }
-    button + br {
-      display: block;
-      content: " ";
-      margin-bottom: 20px;
+
+    textarea[name="txtarea2"] {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Email Extractor</h1>
-  <textarea name="txtarea" rows="4" cols="50" placeholder="Paste text with email addresses here"></textarea> 
-  <br>
-  <button id="extractBtn">Get Emails</button>
-  <br>
-  <textarea name="txtarea2" rows="4" cols="50" placeholder="Extracted Email Addresses"></textarea>
+  <div id="container">
+    <h1>Email Extractor</h1>
+    <textarea name="txtarea" rows="4" placeholder="Paste text with email addresses here"></textarea> 
+    <button id="extractBtn">Get Emails</button>
+    <textarea name="txtarea2" rows="4" placeholder="Extracted Email Addresses" readonly></textarea>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Step 1: Select elements
       const textarea1 = document.querySelector('textarea[name="txtarea"]');
       const button = document.getElementById('extractBtn');
       const textarea2 = document.querySelector('textarea[name="txtarea2"]');
 
-      // Step 2: Add event listener to the button
       button.addEventListener('click', extractEmails);
 
-      // Step 3-6: Email extraction function
       function extractEmails() {
         const content = textarea1.value;
         const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
         const matches = content.match(emailRegex);
-
-        // Step 4: Remove duplicates
         const uniqueEmails = [...new Set(matches)];
-
-        // Step 5: Output results to the second textarea
         textarea2.value = uniqueEmails.join('\n');
       }
     });
